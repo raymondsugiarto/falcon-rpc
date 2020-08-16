@@ -1,7 +1,7 @@
 {
   "name": "falcon-rpc",
   "version": "0.0.1",
-  "description": "Falcon RPC",
+  "description": "Falcon RPC is GRPC GUI Client",
   "productName": "Falcon RPC",
   "author": "raymondsugiarto <raymondsugiarto@gmail.com>",
   "private": true,
@@ -57,5 +57,11 @@
     "node": ">= 10.18.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  }
+  },
+  "keywords": [
+    "gRPC",
+    "gRPC GUI",
+    "FalconRPC",
+    "falconRPC"
+  ]
 }
