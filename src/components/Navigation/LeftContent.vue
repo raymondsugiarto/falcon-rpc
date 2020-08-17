@@ -1,9 +1,5 @@
 <template>
   <div class="left-content bg-grey-3" v-if="!loadingCollection">
-    <!-- <template v-for="(collection, index) in collections">
-      <collection-item :key="index" :collection="collection" :current-path="getCollectionPath(collection)"/> -->
-      <!-- <q-separator :key="`separator`+ index"/> -->
-    <!-- </template> -->
     <template v-for="(collection, index) in rootCollections">
       <collection-item :key="index" :current-path="workspaceRootPath" :collection="collection"/>
     </template>

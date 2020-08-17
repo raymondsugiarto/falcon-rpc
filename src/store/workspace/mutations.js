@@ -41,3 +41,15 @@ export function ADD_WORKSPACE (state, { targetPath, collectionName, dirs }) {
   }
   state.collections = Object.assign([], temp)
 }
+
+export function REMOVE_COLLECTION (state, { targetPath, dir }) {
+  for (const [i, v] of state.collections.entries()) {
+    if (v.path === targetPath) {
+      const idx = state.collections[i].dirs.findIndex(x => x === dir)
+      if (idx > -1) {
+        state.collections[i].dirs.splice(idx, 1)
+      }
+      break
+    }
+  }
+}

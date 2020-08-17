@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { GRPCRequest, GRPCEventType } from '@/utils/grpc-request'
 import { ProtoInfo } from '@/utils/proto-info'
 import cloneDeep from 'lodash/cloneDeep'
@@ -201,9 +201,15 @@ export default {
       protos: 'proto/getProtos',
       viewMode: 'falcon/getViewMode'
     }),
+    ...mapState({
+      'tabView': state => state['tabView']
+    }),
     cacheKey () {
       return this.serviceID + '|' + this.methodName
-    }
+    },
+    visitedViews () {
+      return this.tabView.visitedViews
+    },
   },
   mounted () {
     const { query } = this.$route
@@ -218,13 +224,16 @@ export default {
     }
   },
   beforeDestroy() {
-    // save metadata to localstorage
-    if (this.metadata) {
+    if (pageActiveIndex > -1) {
+      // save metadata to localstorage
       const value = {
         metadata: this.metadata,
         request: this.request
       }
       this.$q.localStorage.set(this.cacheKey, value)
+    } else {
+      // remove from storage when this page is close
+      this.$q.localStorage.remove(this.cacheKey)
     }
   },
   methods: {

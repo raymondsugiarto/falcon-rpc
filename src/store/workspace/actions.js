@@ -59,3 +59,7 @@ export function createDir (context, payload) {
   }
 }
 
+export function deleteCollection (context, { currentPath, targetPath, dir }) {
+  fs.rmdirSync(currentPath, { recursive: true })
+  context.commit('REMOVE_COLLECTION', { targetPath, dir })
+}
