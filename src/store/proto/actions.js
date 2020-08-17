@@ -74,9 +74,13 @@ export function removeProtoLocalStorage (state, { collectionPath, protoFile }) {
 	let protosStorage = LocalStorage.getItem('protos')
 	const idx = protosStorage.findIndex(x => x.cpath === collectionPath)
 	if (idx > -1) {
-			protosStorage[idx].protos = remove(protosStorage[idx].protos, p => {
-					return p != protoFile
-			})
-			LocalStorage.set('protos', protosStorage)
+        if (protoFile) {
+            protosStorage[idx].protos = remove(protosStorage[idx].protos, p => {
+                return p != protoFile
+            })
+        } else {
+            protosStorage.splice(idx, 1)
+        }
+        LocalStorage.set('protos', protosStorage)
 	}
 }

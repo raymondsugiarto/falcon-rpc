@@ -21,20 +21,26 @@
       </q-item-section>
       <q-space />
       <q-item-section avatar>
-        <q-icon name="more_vert">
+        <q-btn
+          icon="more_vert"
+          flat round
+        >
           <q-menu>
             <q-list dense style="min-width: 100px">
               <q-item clickable v-close-popup>
                 <q-item-section @click="handleUploadFile(collection)">{{ $t('action.upload') }}</q-item-section>
               </q-item>
+              <q-item clickable v-close-popup>
+                <q-item-section @click="handleDeleteCollection(collection)">{{ $t('action.delete') }}</q-item-section>
+              </q-item>
             </q-list>
           </q-menu>
-        </q-icon>
+        </q-btn>
       </q-item-section>
     </template>
     <template v-if="protoList && protoList.length > 0">
-        <proto-list :protos="protoList" :current-path="currentPath" :deep="deep + 1"/>
-      </template>
+      <proto-list :protos="protoList" :current-path="currentPath" :deep="deep + 1"/>
+    </template>
     <div v-if="!loadingCollection">
       <template v-for="(itemCollection, index) in collections">
         <collection-item
@@ -136,6 +142,10 @@ export default {
           }
         }
       })
+    },
+    handleDeleteCollection () {
+      this.$store.dispatch('workspace/deleteCollection', { currentPath: this.collectionPath, targetPath: this.currentPath, dir: this.collection  })
+      this.$store.dispatch('proto/removeProtoLocalStorage', { collectionPath: this.collectionPath })
     }
   }
 }
